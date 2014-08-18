@@ -1,0 +1,289 @@
+/* Copyright (c) 2006-2014, Universities Space Research Association (USRA).
+*  All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above copyright
+*       notice, this list of conditions and the following disclaimer in the
+*       documentation and/or other materials provided with the distribution.
+*     * Neither the name of the Universities Space Research Association nor the
+*       names of its contributors may be used to endorse or promote products
+*       derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY USRA ``AS IS'' AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL USRA BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+* OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+* TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+* USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+#include "ArrayVariable.hh"
+#include "Constant.hh"
+#include "Error.hh"
+
+namespace PLEXIL
+{
+
+  template <typename T>
+  ArrayVariable<T>::ArrayVariable()
+    : NotifierImpl(),
+      ExpressionImpl<ArrayImpl<T> >(),
+      AssignableImpl<ArrayImpl<T> >(),
+      m_size(NULL),
+      m_initializer(NULL),
+      m_name("anonymous"),
+      m_maxSize(0),
+      m_known(false),
+      m_savedKnown(false),
+      m_sizeIsGarbage(false),
+      m_initializerIsGarbage(false)
+  {
+  }
+
+  template <typename T>
+  ArrayVariable<T>::ArrayVariable(ArrayImpl<T> const & initVal)
+    : NotifierImpl(),
+      ExpressionImpl<ArrayImpl<T> >(),
+      AssignableImpl<ArrayImpl<T> >(),
+      m_size(NULL),
+      m_initializer(new Constant<ArrayImpl<T> >(initVal)),
+      m_name("anonymous"),
+      m_maxSize(0),
+      m_known(false),
+      m_savedKnown(false),
+      m_sizeIsGarbage(false),
+      m_initializerIsGarbage(true)
+  {
+  }
+
+  template <typename T>
+  ArrayVariable<T>::ArrayVariable(NodeConnector *node,
+                                  const std::string &name,
+                                  Expression *size,
+                                  Expression *initializer,
+                                  bool sizeIsGarbage,
+                                  bool initializerIsGarbage)
+    : NotifierImpl(),
+      ExpressionImpl<ArrayImpl<T> >(),
+      AssignableImpl<ArrayImpl<T> >(),
+      m_size(size),
+      m_initializer(initializer),
+      m_node(node),
+      m_name(name),
+      m_maxSize(0),
+      m_known(false),
+      m_savedKnown(false),
+      m_sizeIsGarbage(sizeIsGarbage),
+      m_initializerIsGarbage(initializerIsGarbage)
+  {
+  }
+
+  template <typename T>
+  ArrayVariable<T>::~ArrayVariable()
+  {
+    if (m_initializerIsGarbage)
+      delete (Expression *) m_initializer;
+    if (m_sizeIsGarbage)
+      delete (Expression *) m_size;
+  }
+  //
+  // Essential Expression API
+  //
+
+  template <typename T>
+  const char *ArrayVariable<T>::exprName() const
+  {
+    return "ArrayVariable";
+  }
+
+  template <typename T>
+  bool ArrayVariable<T>::isKnown() const
+  {
+    return this->isActive() && m_known;
+  }
+
+  template <typename T>
+  bool ArrayVariable<T>::getValuePointerImpl(ArrayImpl<T> const *&ptr) const
+  {
+    if (!this->isActive())
+      return false;
+    if (m_known)
+      ptr = &m_value;
+    return m_known;
+  }
+
+  template <typename T>
+  bool ArrayVariable<T>::getMutableValuePointerImpl(ArrayImpl<T> *&ptr)
+  {
+    if (!this->isActive())
+      return false;
+    if (m_known)
+      ptr = &m_value;
+    return m_known;
+  }
+
+  template <typename T>
+  void ArrayVariable<T>::handleActivate()
+  {
+    if (m_initializer) {
+      ArrayImpl<T> const *valuePtr;
+      if (m_initializer->getValuePointer(valuePtr)) {
+        // Choose the greater of the spec'd size or the length of the initializer
+        size_t size = valuePtr->size();
+        if (m_size) {
+          int32_t specSize;
+          if (m_size->getValue(specSize)) {
+            assertTrue_2(specSize >= 0, "Array initialization: Negative array size illegal");
+            m_maxSize = (size_t) specSize;
+            if (size < m_maxSize)
+              size = m_maxSize;
+          }
+        }
+        m_value.resize(size);
+        m_value = *valuePtr;
+        m_known = true;
+      }
+    }
+    else {
+      reserve();
+    }
+    if (m_known)
+      this->publishChange(this);
+  }
+
+  template <typename T>
+  void ArrayVariable<T>::handleDeactivate()
+  {
+    // Clear saved value
+    m_savedValue.resize(0);
+    m_savedKnown = false;
+    if (m_initializer)
+      m_initializer->deactivate();
+  }
+
+  template <typename T>
+  void ArrayVariable<T>::printSpecialized(std::ostream &s) const
+  {
+    s << m_name << ' ';
+    if (m_maxSize)
+      s << "size = " << m_maxSize << ' ';
+  }
+
+  template <typename T>
+  void ArrayVariable<T>::setValueImpl(ArrayImpl<T> const &value)
+  {
+    bool changed = !m_known || value != m_value;
+    size_t newSize = value.size();
+    assertTrue_2(!m_maxSize || newSize <= m_maxSize,
+                 "ArrayVariable::setValue: New value is bigger than array declared size");
+    m_value = value;
+    m_known = true;
+    // TODO: find more efficient way to handle arrays smaller than max
+    if (newSize < m_maxSize)
+      m_value.resize(m_maxSize);
+    if (changed)
+      this->publishChange(this);
+  }
+
+  template <typename T>
+  void ArrayVariable<T>::setUnknown()
+  {
+    bool changed = m_known;
+    m_known = false;
+    if (changed)
+      this->publishChange(this);
+  }
+
+  // This should only be called when inactive, therefore doesn't need to report changes.
+  template <typename T>
+  void ArrayVariable<T>::reset()
+  {
+    assertTrue_2(!this->isActive(), "ArrayVariable: reset while active");
+    m_savedKnown = m_known = false;
+  }
+
+  template <typename T>
+  void ArrayVariable<T>::saveCurrentValue()
+  {
+    m_savedValue = m_value;
+    m_savedKnown = m_known;
+  }
+
+  // Should only be called when active.
+  template <typename T>
+  void ArrayVariable<T>::restoreSavedValue()
+  {
+    bool changed = (m_known != m_savedKnown) || (m_value != m_savedValue);
+    m_value = m_savedValue;
+    m_known = m_savedKnown;
+    if (changed)
+      this->publishChange(this);
+  }
+
+  template <typename T>
+  const std::string &ArrayVariable<T>::getName() const
+  {
+    return m_name;
+  }
+
+  template <typename T>
+  void ArrayVariable<T>::setName(const std::string &name)
+  {
+    m_name = name;
+  }
+
+  template <typename T>
+  NodeConnector const *ArrayVariable<T>::getNode() const
+  {
+    return m_node;
+  }
+
+  template <typename T>
+  NodeConnector *ArrayVariable<T>::getNode()
+  {
+    return m_node;
+  }
+
+  template <typename T>
+  Assignable *ArrayVariable<T>::getBaseVariable()
+  {
+    return Assignable::asAssignable();
+  }
+
+  template <typename T>
+  Assignable const *ArrayVariable<T>::getBaseVariable() const
+  {
+    return Assignable::asAssignable();
+  }
+
+  template <typename T>
+  void ArrayVariable<T>::reserve()
+  {
+    if (m_size) {
+      int32_t size;
+      if (m_size->getValue(size)) {
+        assertTrue_2(size >= 0, "Array initialization: Negative array size illegal");
+        m_value.resize(size);
+        m_known = true; // array is known, not its contents
+      }
+    }
+  }
+  
+  //
+  // Explicit instantiations
+  //
+
+  template class ArrayVariable<bool>;
+  template class ArrayVariable<int32_t>;
+  template class ArrayVariable<double>;
+  template class ArrayVariable<std::string>;
+
+} // namespace PLEXIL
+
