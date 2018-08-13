@@ -27,6 +27,6 @@ lib_LTLIBRARIES = libLauncher.la
 include_HEADERS =
 libLauncher_la_SOURCES = Launcher.cc
 libLauncher_la_CPPFLAGS = $(AM_CPPFLAGS) \
- -I@top_srcdir@/third-party/pugixml/src -I@top_srcdir@/app-framework \
+ -I@top_srcdir@/app-framework \
  -I@top_srcdir@/exec -I@top_srcdir@/intfc -I@top_srcdir@/expr \
  -I@top_srcdir@/value -I@top_srcdir@/utils

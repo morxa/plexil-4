@@ -31,7 +31,7 @@ TestExec_SOURCES = exec-test-runner.cc ExecTestRunner.cc TestExternalInterface.c
 TestExec_LDADD =
 
 TestExec_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/app-framework \
- -I@top_srcdir@/xml-parser -I@top_srcdir@/third-party/pugixml/src \
+ -I@top_srcdir@/xml-parser \
  -I@top_srcdir@/exec -I@top_srcdir@/intfc -I@top_srcdir@/expr \
  -I@top_srcdir@/value -I@top_srcdir@/utils
 
@@ -55,7 +55,6 @@ endif
 
 TestExec_LDADD += @top_srcdir@/app-framework/libPlexilAppFramework.la \
  @top_srcdir@/xml-parser/libPlexilXmlParser.la \
- @top_srcdir@/third-party/pugixml/src/libpugixml.la \
  @top_srcdir@/exec/libPlexilExec.la @top_srcdir@/intfc/libPlexilIntfc.la \
  @top_srcdir@/expr/libPlexilExpr.la @top_srcdir@/value/libPlexilValue.la \
  @top_srcdir@/utils/libPlexilUtils.la
