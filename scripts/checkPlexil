@@ -42,21 +42,14 @@ then
     exit 2
 fi
 
-prog=${PLEXIL_HOME}/checker/global-decl-checker.jar
+prog=/usr/share/java/plexil/global-decl-checker.jar
 args=$*
 JAVA=java
-if [ -n "$JAVA_HOME" ]
-then
-    JAVA=$JAVA_HOME/bin/java
-fi
 
 # Make sure jar file exists
 if [ ! -f "${prog}" ]
 then
-  echo "Cannot find file ${prog}. To build it:"
-  echo "  cd ${PLEXIL_HOME}/checker"
-  echo "  ant jar"
-  echo "If JAR is located elsewhere, please update the location in the script."
+  echo "Cannot find file ${prog}."
   exit 2
 fi
 
