@@ -26,22 +26,8 @@
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-# Check environment variables
-if [ ! $PLEXIL_HOME ]
-then
-    echo Error: Please set environment variable PLEXIL_HOME
-    echo to the full pathname of your 'plexil' or 'trunk' directory.
-    exit 1
-fi
+JAVA=/usr/bin/java
+JARS_DIR=/usr/share/java
+ANTLR_RUNTIME_JAR=antlr3-runtime.jar
 
-. ${PLEXIL_HOME}/scripts/plexil-setup.sh
-
-JARS_DIR=${PLEXIL_HOME}/jars
-ANTLR_RUNTIME_JAR=antlr-3.5.2-complete-no-st3.jar
-JAVA=java
-if [ -n "$JAVA_HOME" ]
-then
-    JAVA=$JAVA_HOME/bin/java
-fi
-
-exec $JAVA -classpath $JARS_DIR/PlexilCompiler.jar:$JARS_DIR/$ANTLR_RUNTIME_JAR:$JARS_DIR/nanoxml.jar:$JARS_DIR/saxon.jar plexil.Compiler $@
+exec $JAVA -classpath $JARS_DIR/PlexilCompiler.jar:$JARS_DIR/$ANTLR_RUNTIME_JAR:$JARS_DIR/nanoxml.jar:$JARS_DIR/Saxon/saxon.jar plexil.Compiler $@
