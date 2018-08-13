@@ -26,8 +26,8 @@
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-JAVA=/usr/bin/java
+JAVA=${JAVA:-/usr/bin/java}
 JARS_DIR=/usr/share/java
 ANTLR_RUNTIME_JAR=antlr3-runtime.jar
 
-exec $JAVA -classpath $JARS_DIR/PlexilCompiler.jar:$JARS_DIR/$ANTLR_RUNTIME_JAR:$JARS_DIR/nanoxml.jar:$JARS_DIR/Saxon/saxon.jar plexil.Compiler $@
+exec $JAVA -classpath $JARS_DIR/PlexilCompiler.jar:$JARS_DIR/$ANTLR_RUNTIME_JAR:$JARS_DIR/nanoxml.jar:$JARS_DIR/saxon/saxon.jar plexil.Compiler $@
