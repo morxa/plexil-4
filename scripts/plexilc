@@ -166,9 +166,9 @@ then
 
     if [ -n "$quiet" ]
     then
-	emacs --batch --no-site-file --load $PLEXIL_HOME/compilers/plexilisp/plexil.el $1 --eval '(plexil)' > /dev/null 2>&1
+	emacs --batch --no-site-file --load $PLEXIL_HOME/plexilisp/plexil.el $1 --eval '(plexil)' > /dev/null 2>&1
     else
-	emacs --batch --no-site-file --load $PLEXIL_HOME/compilers/plexilisp/plexil.el $1 --eval '(plexil)'
+	emacs --batch --no-site-file --load $PLEXIL_HOME/plexilisp/plexil.el $1 --eval '(plexil)'
     fi
 
 	# If plexilisp generates a plan, we can check it.
