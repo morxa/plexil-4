@@ -57,6 +57,7 @@ essentials: universalExec TestExec IpcAdapter UdpAdapter plexil-compiler plexils
 # Standalone targets
 #
 
+.PHONY: checker pv plexil-compiler plexilscript robosim sample
 checker:
 	(cd checker && ant jar)
 
