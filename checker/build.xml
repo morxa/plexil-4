@@ -13,14 +13,14 @@
   <property name = "domain-scope"       value = "main"/>
   <property name = "domain-scope-dir"   value = ""/>
   <property name = "main-class"         value = "DeclMain"/>
-  <property name = "lib-dir"            location = "${env.PLEXIL_HOME}/jars"/>
+  <property name = "jar-dir"            location = "/usr/share/java"/>
   <property name = "resources"          location = "."/>
   <property name = "compile-includes"   location = "reader/**,main/**,model/**"/>
   <property name = "compile-excludes"   location = ""/>
   
   <!-- java library files that belong in the class path and the jar -->
   
-  <fileset dir = "${lib-dir}" id = "libraries">
+  <fileset dir = "${jar-dir}" id = "libraries">
     <include name = "nanoxml.jar"/>
   </fileset>
   
