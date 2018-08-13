@@ -26,11 +26,6 @@
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 MY_PLEXIL_HOME := $(shell pwd)
-ifneq ($(PLEXIL_HOME),)
-ifneq ($(PLEXIL_HOME),$(MY_PLEXIL_HOME))
-$(error Environment variable PLEXIL_HOME is in error. It must be set to $(MY_PLEXIL_HOME) before proceeding)
-endif
-endif
 
 export PLEXIL_HOME := $(MY_PLEXIL_HOME)
 
