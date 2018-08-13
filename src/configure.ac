@@ -214,7 +214,6 @@ AC_CONFIG_FILES([Makefile
                  expr/Makefile
                  intfc/Makefile
                  exec/Makefile
-                 third-party/pugixml/src/Makefile
                  xml-parser/Makefile
                  app-framework/Makefile
                  interfaces/Launcher/Makefile])

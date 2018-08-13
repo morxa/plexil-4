@@ -66,7 +66,7 @@ endif
 ##
 
 SUBDIRS = utils value expr intfc exec \
- third-party/pugixml/src xml-parser app-framework \
+ xml-parser app-framework \
  interfaces/Launcher \
  $(MAYBE_DEBUG_LISTENER_SUBDIRS) $(MAYBE_VIEWER_SUBDIRS) \
  $(MAYBE_UNIVERSAL_EXEC_SUBDIRS) \
