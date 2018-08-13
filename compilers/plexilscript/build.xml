@@ -5,13 +5,13 @@
   </description>
 
   <property environment="env"/>
-  <property name="dir.antlr" location="${env.PLEXIL_HOME}/jars"/>
+  <property name="dir.antlr" location="/usr/share/java"/>
   <property name="dir.grammars" location="antlr"/>
   <property name="dir.java" location="java"/>
   <property name="dir.generated" location="generated"/>
   <property name="dir.classes" location="classes"/>
   <property name="dir.jars" location="jars"/>
-  <property name="dir.install" location="${env.PLEXIL_HOME}"/>
+  <property name="dir.install" location="../../jars"/>
 
   <path id="antlr.classpath">
       <pathelement path="${classpath}"/>
@@ -32,7 +32,7 @@
 
   <target name="install" depends="plexilscript-jar">
     <copy file="${dir.jars}/plexilscript.jar"
-	  todir="${env.PLEXIL_HOME}/jars"
+      todir="${dir.install}"
 	  preservelastmodified="true"/>
   </target>
 
