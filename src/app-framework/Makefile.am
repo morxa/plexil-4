@@ -60,6 +60,7 @@ endif
 
 # Libraries to link against
 libPlexilAppFramework_la_LIBADD = @top_srcdir@/xml-parser/libPlexilXmlParser.la \
+ -lpugixml \
  @top_srcdir@/exec/libPlexilExec.la \
  @top_srcdir@/intfc/libPlexilIntfc.la @top_srcdir@/expr/libPlexilExpr.la \
  @top_srcdir@/value/libPlexilValue.la @top_srcdir@/utils/libPlexilUtils.la

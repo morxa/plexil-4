@@ -45,7 +45,7 @@ libPlexilXmlParser_la_SOURCES = ArithmeticFunctionFactory.cc \
  PlexilSchema.cc SymbolTable.cc updateXmlParser.cc UserVariableFactory.cc
 
 DEPENDED_LIBS = libPlexilXmlParser.la \
- @top_srcdir@/exec/libPlexilExec.la \
+ -lpugixml @top_srcdir@/exec/libPlexilExec.la \
  @top_srcdir@/intfc/libPlexilIntfc.la @top_srcdir@/expr/libPlexilExpr.la \
  @top_srcdir@/value/libPlexilValue.la @top_srcdir@/utils/libPlexilUtils.la
 

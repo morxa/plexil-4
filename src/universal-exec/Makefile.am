@@ -30,7 +30,7 @@ universalExec_CPPFLAGS = $(AM_CPPFLAGS) \
  -I@top_srcdir@/app-framework -I@top_srcdir@/exec -I@top_srcdir@/intfc \
  -I@top_srcdir@/expr -I@top_srcdir@/value -I@top_srcdir@/utils
 
-universalExec_LDADD = \
+universalExec_LDADD = -lpugixml \
  @top_srcdir@/app-framework/libPlexilAppFramework.la \
  @top_srcdir@/exec/libPlexilExec.la @top_srcdir@/intfc/libPlexilIntfc.la \
  @top_srcdir@/expr/libPlexilExpr.la @top_srcdir@/value/libPlexilValue.la \
