@@ -53,7 +53,7 @@
 ;;;   ...the rest should be intuitive
 
 (defconst *plexil-home* (format "%s" (getenv "PLEXIL_HOME")))
-(defconst *plexilisp-location* (format "%s/compilers/plexilisp" *plexil-home*))
+(defconst *plexilisp-location* (format "%s/plexilisp" *plexil-home*))
 (defconst *bin-location* (format "%s/scripts" *plexil-home*))
 
 ;;; Note that this version is for Plexilisp only; not tied to
