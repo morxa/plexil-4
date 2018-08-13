@@ -36,7 +36,7 @@ PARSER_JAVA_SRC_DIR	:= $(PARSER_JAVA_DIR)/plexil
 JAVA_SRCPATH		:= java
 JAVA_SRC_DIR		:= $(JAVA_SRCPATH)/plexil
 CLASSES_DIR			:= classes
-THIRD_PARTY_JAR_DIR	:= $(PLEXIL_HOME)/jars
+THIRD_PARTY_JAR_DIR	:= /usr/share/java
 
 # Files
 PARSER_SRCS		:= $(PARSER_SRC_DIR)/Plexil.g $(PARSER_SRC_DIR)/PlexilTreeTransforms.g
@@ -52,14 +52,14 @@ PLEXILC_JAR		:= $(PLEXIL_HOME)/jars/PlexilCompiler.jar
 DIRT			+= $(PARSER_JAVA) $(PARSER_CLASSES) $(JAVA_CLASSES)
 
 # Invoking ANTLR 3
-ANTLR3_TOOL_JAR	:= $(THIRD_PARTY_JAR_DIR)/antlr-3.5.2-complete-no-st3.jar
+ANTLR3_TOOL_JAR	:= $(THIRD_PARTY_JAR_DIR)/antlr3.jar
 ANTLR_OPTS		:= -fo $(PARSER_JAVA_SRC_DIR)
 ANTLR			:= $(JAVA) -jar $(ANTLR3_TOOL_JAR)
 
 # Other necessities
 ANTLR3_RUNTIME_JAR	:= $(ANTLR3_TOOL_JAR)
 NANOXML_JAR			:= $(THIRD_PARTY_JAR_DIR)/nanoxml.jar
-SAXON_JAR			:= $(THIRD_PARTY_JAR_DIR)/saxon.jar
+SAXON_JAR			:= $(THIRD_PARTY_JAR_DIR)/saxon/saxon.jar
 
 # Classpath for Java compiler
 JAVAC_CLASSPATH	:= $(ANTLR3_RUNTIME_JAR):$(NANOXML_JAR):$(SAXON_JAR):$(CLASSES_DIR)
