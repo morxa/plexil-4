@@ -29,7 +29,7 @@
 if [ -z "$PLEXIL_HOME" ]
   then
     echo Error: Please set environment variable PLEXIL_HOME
-    echo to the full pathname of your 'plexil' or 'trunk' directory.
+    echo or make sure that /etc/profile.d/plexil.sh is loaded.
     exit 1
 fi
 
@@ -46,10 +46,6 @@ if [ $# = 2 ]
     exit 1
 fi
 
-JAVA=java
-if [ -n "$JAVA_HOME" ]
-then
-    JAVA=$JAVA_HOME/bin/java
-fi
+JAVA=/usr/bin/java
 
-exec $JAVA -jar $PLEXIL_HOME/jars/saxon9he.jar -xsl:"$PLEXIL_HOME/schema/translate-plexil.xsl" -s:"$input_file" -o:"$output_file"
+exec $JAVA -jar /usr/share/java/saxon/Saxon-HE.jar -xsl:"$PLEXIL_HOME/schema/translate-plexil.xsl" -s:"$input_file" -o:"$output_file"
