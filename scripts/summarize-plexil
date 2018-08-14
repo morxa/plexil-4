@@ -37,7 +37,7 @@ usage="summarize-plexil input-file [ result-file ] [ transform-file ]"
 if [ -z "$PLEXIL_HOME" ]
   then
     echo Please set environment variable PLEXIL_HOME
-    echo to the absolute pathname of your 'plexil' directory.
+    echo by loading /etc/profile.d/plexil.sh.
     exit 1
 fi
 
@@ -47,7 +47,7 @@ transform_file="$PLEXIL_HOME/schema/summarize-plexil.xsl"
 result_file="summary.txt"
 
 # Location of the Saxon XSLT processor
-saxon_jar="$PLEXIL_HOME/jars/saxon9he.jar"
+saxon_jar=/usr/share/java/saxon/Saxon-HE.jar
  
 # Determine argument values, overriding defaults when specified.
 
@@ -68,11 +68,7 @@ if [ $# = 3 ]
     exit 1
 fi
 
-JAVA=java
-if [ -n "$JAVA_HOME" ]
-then
-    JAVA=$JAVA_HOME/bin/java
-fi
+JAVA=/usr/bin/java
 
 echo "Summarizing $input_file ..."
 $JAVA -jar $saxon_jar -o:$result_file $input_file $transform_file 
