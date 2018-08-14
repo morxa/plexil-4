@@ -37,14 +37,14 @@
 if [ -z "$PLEXIL_HOME" ]
 then
     echo Error: Please set environment variable PLEXIL_HOME
-    echo to the full pathname of your 'plexil' or 'trunk' directory.
+    echo by loading /etc/profile.d/plexil.sh.
     echo Exiting.
     exit 2
 fi
 
 prog=/usr/share/java/plexil/global-decl-checker.jar
 args=$*
-JAVA=java
+JAVA=/usr/bin/java
 
 # Make sure jar file exists
 if [ ! -f "${prog}" ]
