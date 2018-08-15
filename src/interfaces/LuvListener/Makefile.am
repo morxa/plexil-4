@@ -23,15 +23,15 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-lib_LTLIBRARIES = libLuvListener.la
+lib_LTLIBRARIES = libPlexilLuvListener.la
 
-libLuvListener_la_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/interfaces/Sockets \
+libPlexilLuvListener_la_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/interfaces/Sockets \
  -I@top_srcdir@/app-framework \
  -I@top_srcdir@/exec -I@top_srcdir@/intfc -I@top_srcdir@/expr \
  -I@top_srcdir@/value -I@top_srcdir@/utils
 
 include_HEADERS = LuvFormat.hh LuvListener.hh
 
-libLuvListener_la_SOURCES = LuvFormat.cc LuvListener.cc
+libPlexilLuvListener_la_SOURCES = LuvFormat.cc LuvListener.cc
 
 # TODO: libraries to link against (?)

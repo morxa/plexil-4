@@ -37,11 +37,11 @@ universalExec_LDADD = -lpugixml \
  @top_srcdir@/utils/libPlexilUtils.la
 
 if DEBUG_LISTENER_OPT
-  universalExec_LDADD += @top_srcdir@/interfaces/PlanDebugListener/libPlanDebugListener.la
+  universalExec_LDADD += @top_srcdir@/interfaces/PlanDebugListener/libPlexilPlanDebugListener.la
 endif
 
 if VIEWER_OPT
   universalExec_CPPFLAGS += -I@top_srcdir@/interfaces/LuvListener
-  universalExec_LDADD += @top_srcdir@/interfaces/LuvListener/libLuvListener.la \
+  universalExec_LDADD += @top_srcdir@/interfaces/LuvListener/libPlexilLuvListener.la \
  @top_srcdir@/interfaces/Sockets/libPlexilSockets.la
 endif

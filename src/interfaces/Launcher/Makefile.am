@@ -23,10 +23,10 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-lib_LTLIBRARIES = libLauncher.la
+lib_LTLIBRARIES = libPlexilLauncher.la
 include_HEADERS =
-libLauncher_la_SOURCES = Launcher.cc
-libLauncher_la_CPPFLAGS = $(AM_CPPFLAGS) \
+libPlexilLauncher_la_SOURCES = Launcher.cc
+libPlexilLauncher_la_CPPFLAGS = $(AM_CPPFLAGS) \
  -I@top_srcdir@/app-framework \
  -I@top_srcdir@/exec -I@top_srcdir@/intfc -I@top_srcdir@/expr \
  -I@top_srcdir@/value -I@top_srcdir@/utils

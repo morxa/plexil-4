@@ -23,13 +23,13 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-lib_LTLIBRARIES = libGanttListener.la
+lib_LTLIBRARIES = libPlexilGanttListener.la
 include_HEADERS = GanttListener.hh
-libGanttListener_la_CPPFLAGS = $(AM_CPPFLAGS) \
+libPlexilGanttListener_la_CPPFLAGS = $(AM_CPPFLAGS) \
  -I@top_srcdir@/app-framework \
  -I@top_srcdir@/expr -I@top_srcdir@/intfc -I@top_srcdir@/exec \
  -I@top_srcdir@/value -I@top_srcdir@/utils
-libGanttListener_la_SOURCES = GanttListener.cc
+libPlexilGanttListener_la_SOURCES = GanttListener.cc
 
 # TODO: libraries to link against (?)
 

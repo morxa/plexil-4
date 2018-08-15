@@ -23,14 +23,14 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-lib_LTLIBRARIES = libPlanDebugListener.la
+lib_LTLIBRARIES = libPlexilPlanDebugListener.la
 
-libPlanDebugListener_la_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/app-framework \
+libPlexilPlanDebugListener_la_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/app-framework \
  -I@top_srcdir@/exec -I@top_srcdir@/intfc -I@top_srcdir@/expr \
  -I@top_srcdir@/value -I@top_srcdir@/utils
 
 include_HEADERS = PlanDebugListener.hh
 
-libPlanDebugListener_la_SOURCES = PlanDebugListener.cc
+libPlexilPlanDebugListener_la_SOURCES = PlanDebugListener.cc
 
 # TODO: libraries to link against (?)

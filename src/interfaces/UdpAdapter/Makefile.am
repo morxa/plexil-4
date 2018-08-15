@@ -25,14 +25,14 @@
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-lib_LTLIBRARIES = libUdpUtils.la libUdpAdapter.la
+lib_LTLIBRARIES = libPlexilUdpUtils.la libPlexilUdpAdapter.la
 include_HEADERS = MessageQueueMap.hh UdpAdapter.hh udp-utils.hh
-libUdpUtils_la_SOURCES = udp-utils.cc
-libUdpUtils_la_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/utils
+libPlexilUdpUtils_la_SOURCES = udp-utils.cc
+libPlexilUdpUtils_la_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/utils
 
-libUdpAdapter_la_SOURCES = MessageQueueMap.cc UdpAdapter.cc
-libUdpAdapter_la_LIBADD = libUdpUtils.la
-libUdpAdapter_la_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/interfaces/UpdUtils \
+libPlexilUdpAdapter_la_SOURCES = MessageQueueMap.cc UdpAdapter.cc
+libPlexilUdpAdapter_la_LIBADD = libPlexilUdpUtils.la
+libPlexilUdpAdapter_la_CPPFLAGS = $(AM_CPPFLAGS) -I@top_srcdir@/interfaces/UpdUtils \
  -I@top_srcdir@/app-framework \
  -I@top_srcdir@/exec -I@top_srcdir@/intfc -I@top_srcdir@/expr \
  -I@top_srcdir@/value -I@top_srcdir@/utils
@@ -41,5 +41,5 @@ if MODULE_TESTS_OPT
   noinst_PROGRAMS = test/udp-tests
   test_udp_tests_SOURCES = test/udp-tests.cc
   test_udp_tests_CPPFLAGS = -I@top_srcdir@/utils
-  test_udp_tests_LDADD = libUdpUtils.la @top_srcdir@/utils/libPlexilUtils.la
+  test_udp_tests_LDADD = libPlexilUdpUtils.la @top_srcdir@/utils/libPlexilUtils.la
 endif
