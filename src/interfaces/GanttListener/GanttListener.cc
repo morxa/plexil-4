@@ -646,7 +646,7 @@ namespace PLEXIL
    }
 
    extern "C" {
-      void initGanttListener() {
+      void initPlexilGanttListener() {
          REGISTER_EXEC_LISTENER(GanttListener, "GanttListener");
       }
    }

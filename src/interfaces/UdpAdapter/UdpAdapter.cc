@@ -1330,7 +1330,7 @@ namespace PLEXIL
 // Register the UdpAdapter
 extern "C"
 {
-  void initUdpAdapter()
+  void initPlexilUdpAdapter()
   {
     REGISTER_ADAPTER(PLEXIL::UdpAdapter, "UdpAdapter");
   }

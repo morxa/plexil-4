@@ -36,4 +36,4 @@
 #define PLAN_FAILURE_TYPE_STATE "PlanFailureType"
 
 extern "C"
-void initLauncher();
+void initPlexilLauncher();

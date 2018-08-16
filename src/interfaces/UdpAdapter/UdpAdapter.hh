@@ -162,5 +162,5 @@ namespace PLEXIL
 
 extern "C"
 {
-  void initUdpAdapter();
+  void initPlexilUdpAdapter();
 }

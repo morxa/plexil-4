@@ -374,7 +374,7 @@ namespace PLEXIL
 }
 
 extern "C"
-void initLauncher()
+void initPlexilLauncher()
 {
   REGISTER_ADAPTER(PLEXIL::Launcher, "Launcher");
 }

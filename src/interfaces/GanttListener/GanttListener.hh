@@ -141,7 +141,7 @@ namespace PLEXIL
 
 extern "C" 
 {
-   void initGanttListener();
+   void initPlexilGanttListener();
 }
 
 
