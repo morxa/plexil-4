@@ -114,10 +114,15 @@ namespace PLEXIL
       const char* libCPath =
         xml.attribute(InterfaceSchema::LIB_PATH_ATTR()).value();
       if (!dynamicLoadModule(name.c_str(), libCPath)) {
-        warn("AdapterFactory: unable to load module for adapter type \""
-             << name.c_str() << "\"");
-        wasCreated = false;
-        return NULL;
+        debugMsg("AdapterFactory:createInstance",
+            "AdapterFactory: unable to load module for adapter type \""
+             << name.c_str() << "\" " << "Trying again with prefix.");
+        if (!dynamicLoadModule(("Plexil" + name).c_str(), libCPath)) {
+          warn("AdapterFactory: unable to load module for adapter type \""
+               << name.c_str() << "\"");
+          wasCreated = false;
+          return NULL;
+        }
       }
 
       // See if it's registered now
