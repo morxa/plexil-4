@@ -43,12 +43,10 @@
 if [ -z "$PLEXIL_HOME" ]
 then
     echo Error: Please set environment variable PLEXIL_HOME
-    echo to the full pathname of your 'plexil' or 'trunk' directory.
+    echo by loading /etc/profile.d/plexil.sh.
     echo Exiting.
     exit 1
 fi
-
-. $PLEXIL_HOME/scripts/plexil-setup.sh
 
 validate_file()
 {
@@ -174,6 +172,9 @@ help_text=" Options:\n\
 if [ $PLEXIL_EXECUTABLE ]
 then
     prog=$PLEXIL_EXECUTABLE
+elif [ -f /usr/bin/plexil-universalExec ] && [ -x /usr/bin/plexil-universalExec ]
+then
+    prog=/usr/bin/plexil-universalExec
 elif [ -f $PLEXIL_HOME/bin/universalExec ] && [ -x $PLEXIL_HOME/bin/universalExec ]
 then
     prog=$PLEXIL_HOME/bin/universalExec
@@ -359,7 +360,7 @@ then
         # Check local port, if supplied
         if [ -n "$port_in" ]
         then
-            if ( echo `list_ports_in_use` | grep -q -v "\<${port_in}\>" )
+            if ( echo `$PLEXIL_HOME/scripts/list_ports_in_use` | grep -q -v "\<${port_in}\>" )
             then
                 echo "Error: No Viewer is listening on local port $port_in. Exiting."
                 exit 1
@@ -380,13 +381,13 @@ else
     if [ -z "$port_in" ]
     then
         # Find open local port
-        port_in=`find_open_port`
+        port_in=`$PLEXIL_HOME/scripts/find_open_port`
         if [ -z "$port_in" ]
         then
             echo "Unable to find an open local port for Viewer communications."
             exit 1
         fi
-    elif ( echo `list_ports_in_use` | grep -q "\<${port_in}\>" )
+    elif ( echo `$PLEXIL_HOME/scripts/list_ports_in_use` | grep -q "\<${port_in}\>" )
     then
         echo "Error: Port $port_in is in use. Exiting."
         exit 1
