@@ -35,7 +35,7 @@ usage()
 if [ -z "$PLEXIL_HOME" ]
 then
     echo Error: Please set environment variable PLEXIL_HOME
-    echo to the full pathname of your root 'plexil' directory.
+    echo by loading /etc/profile.d/plexil.sh.
     exit 2
 fi
 
@@ -71,7 +71,7 @@ then
     exit 2
 fi
 
-if ( list_ports_in_use | grep -q "\<$1\>" )
+if ( $PLEXIL_HOME/scripts/list_ports_in_use | grep -q "\<$1\>" )
 then
     if [ -z "$quiet" ]
     then
