@@ -328,7 +328,7 @@ public class LuvSocketServer {
 
     public static Set<Integer> getPortsInUse() {
         Set<Integer> result = new TreeSet<Integer>();
-        String[] cmd = {"list_ports_in_use"};
+        String[] cmd = {Constants.PLEXIL_SCRIPTS_DIR + "/list_ports_in_use"};
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -362,7 +362,7 @@ public class LuvSocketServer {
 
     /** Return true if port free, false otherwise */
     public static boolean portFree(int port) {
-        String[] cmd = {"port_in_use", "-q", ""};
+        String[] cmd = {Constants.PLEXIL_SCRIPTS_DIR + "/port_in_use", "-q", ""};
         cmd[2] = Integer.toString(port);
         try {
             return (1 == Runtime.getRuntime().exec(cmd).waitFor());
