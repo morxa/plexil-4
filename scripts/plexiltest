@@ -351,7 +351,7 @@ else
     if [ -z "$port_in" ]
     then
         # Find open local port
-        port_in=`find_open_port`
+        port_in=`$PLEXIL_HOME/scripts/find_open_port`
         if [ -z "$port_in" ]
         then
             echo "Unable to find an open local port for Viewer communications. Exiting."
