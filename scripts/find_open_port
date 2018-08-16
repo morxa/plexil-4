@@ -28,7 +28,7 @@
 if [ -z "$PLEXIL_HOME" ]
 then
     echo Error: Please set environment variable PLEXIL_HOME
-    echo to the full pathname of your root 'plexil' directory.
+    echo by loading /etc/profile.d/plexil.sh.
     exit 2
 fi
 
@@ -47,7 +47,7 @@ MAX_PORT=49150
 active_ports="/tmp/find_open_port.$PPID"
 port_found=0
 
-ports_in_use=`list_ports_in_use`
+ports_in_use=`$PLEXIL_HOME/scripts/list_ports_in_use`
 
 for ((n=$MIN_PORT ; n<=$MAX_PORT ; ++n))
 do
